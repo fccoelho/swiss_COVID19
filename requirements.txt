@@ -1,12 +1,13 @@
- pandas
- openpyxl
- prophet
- epiweeks
- networkx
- holoviews
- datashader
- plotly
- seaborn
- requests
- pymc3
+pandas
+openpyxl
+prophet
+epiweeks
+networkx
+holoviews
+datashader
+plotly
+seaborn
+requests
+pymc3
+arviz
  
