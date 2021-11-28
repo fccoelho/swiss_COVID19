@@ -10,4 +10,4 @@ seaborn
 requests
 pymc3
 arviz
- 
+geopandas
