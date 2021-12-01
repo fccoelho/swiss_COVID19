@@ -20,8 +20,8 @@
     % proper Figure object with a Caption API and a way to capture that
     % in the conversion process - todo).
     \usepackage{caption}
-    \DeclareCaptionFormat{nocaption}{}
-    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+%     \DeclareCaptionFormat{nocaption}{}
+%     \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
 
     \usepackage{float}
     \floatplacement{figure}{H} % forces figures to be placed at the correct location
@@ -156,6 +156,7 @@
     % Document parameters
     % Document title
     \title{Remarks on COVID-19 Dynamics in Switzerland}
+    \author{Flávio Codeço Coelho}
     
     
     
@@ -377,17 +378,44 @@
     \maketitle
     
     
+\tableofcontents
 
-    
+\listoffigures
+
+\section{Main Findings}
+\subsection{Time-delay analysis}
+The cross correlation analysis (section \ref{s:cross-correlation-analysis}) shows that cantons maintain strong correlation but with short to no lags (maximum lag is 3 days), indicating the rapid spread of the virus in this 5th wave. 
+
+Clustering and network community detection reveal expected patterns of mixing (exchange of cases) among cases (figure \ref{fig:dendro}).
+
+Network community analysis seems to support the hypothesis of a \textbf{east to west spread pattern} with Zurich acting as a hub between the two halves of the country (figure \ref{fig:network}).
+
+\subsection{Bayesian models}
+
+Prevalence estimates continue to indicate an \textbf{accelerated growth}, with no sign of improvement (figure \ref{fig:prev}). 
+
+Hospitalization rates which had shown some growth at the beginning of November now seem to drop significantly (figure \ref{fig:phosp}), which may reflect a greater delay in reporting of hospitalization numbers to the FOPH.
+
+Model-based inference indicate that the peak of the fifth wave may be but a few days off (figure \ref{fig:sir}), but this again must be recalculated with more up-to-date data.
+
+\subsection{Forecast models}
+Both the KNN and the LightGBM Regressions point to marked growth in the number of hospitalization.
+
+
     \hypertarget{estimating-hospitalization-risk}{%
-\section{Estimating Hospitalization
-Risk}\label{estimating-hospitalization-risk}}
+\section{Forecasting Hospitalization}\label{estimating-hospitalization-risk}}
+
+Hospitalization trends is the most import forecasting targets for the COVID-19 epidemic due its close association with death rates, and its economic impact. 
+
+Hospitalization rates are dependent in part on the spread of the virus, or the incidence trends, but also on the immunological and genetic, and age structure of the population. Sucha a complex causal framework adds to the challenges to its forecasting.
 
     \hypertarget{getting-the-data-from-foph}{%
 \subsection{Data Sources}
 \label{getting-the-data-from-foph}}
 
-The data used in this report was obtained from the Federal Office of Public Health (FOPH)
+In this report we will make use of available data at the federal scale to predict local trends, more specifically of the canton of Geneva.
+
+The data used in this report was obtained from the Federal Office of Public Health (FOPH). 
 
 The URLs for downloading the data are listed below.
 
@@ -398,18 +426,19 @@ The URLs for downloading the data are listed below.
  \item [Tests:] \url{https://www.covid19.admin.ch/api/data/20211201-ln4xxagf/sources/COVID19Test_geoRegion_all.csv}
 \end{description}
 
-
-
+All of the above data sources are updated daily but note necessarily reflect the latest numbers of the disease as some reporting delays are known to exist.
     
     
     \hypertarget{visualizing-the-series}{%
 \subsection{Visualizing the Series}\label{visualizing-the-series}}
 
+We will start by a quick visualization of the available time-series used.
+
     \hypertarget{hospitalizations}{%
 \subsubsection{Hospitalizations}\label{hospitalizations}}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_28_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_28_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -417,7 +446,7 @@ The URLs for downloading the data are listed below.
 \subsubsection{Cases}\label{cases}}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_30_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_30_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -426,7 +455,7 @@ The URLs for downloading the data are listed below.
 persons}\label{hospitalization-of-vaccinated-persons}}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_32_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_32_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -434,22 +463,22 @@ persons}\label{hospitalization-of-vaccinated-persons}}
 \subsubsection{Tests}\label{tests}}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_34_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_34_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_35_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_35_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_36_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_36_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_37_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_37_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -463,7 +492,7 @@ persons}\label{hospitalization-of-vaccinated-persons}}
 \subsubsection{Effective Reproduction Number, $R_e$}\label{re}}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_40_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_40_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -471,7 +500,7 @@ persons}\label{hospitalization-of-vaccinated-persons}}
 \subsubsection{Deaths}\label{deaths}}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_42_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_42_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -480,10 +509,10 @@ persons}\label{hospitalization-of-vaccinated-persons}}
 cases}{Hospitalizations vs cases}}\label{hospitalizations-vs-cases}}
 
 One way to visualize the hospitalization rate change over time, is to
-look at a scatterplot such as the one below, colored by the dates.
+look at a scatter-plot such as the one below, colored by the dates.
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_44_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_44_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -491,12 +520,12 @@ look at a scatterplot such as the one below, colored by the dates.
 hospitalization rate in 2021.
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_46_0.png}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_46_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
     \hypertarget{cross-correlation-analysis}{%
-\subsection{Cross-Correlation analysis}\label{cross-correlation-analysis}}
+\subsection{Cross-Correlation analysis}\label{s:cross-correlation-analysis}}
 
 As the virus spreads through geographical space, it leaves a trace of
 its path in the delays between the incidence curves in different places.
@@ -507,7 +536,7 @@ the pairwise correlations between all cantons). To obtain the lag
 \(\tau\) between two series we can look for the lag that maximizes the
 cross-correlation coefficient between 2 cantons.
 
-The cross-correlation function for timeseries is given by:
+The cross-correlation function for time-series is given by:
 
 \[\rho_{XY}(\tau)={\frac {\operatorname{E} \left[\left(X_{t}-\mu _{X}\right){\overline {\left(Y_{t+\tau }-\mu _{Y}\right)}}\right]}{\sigma _{X}\sigma _{Y}}}.\]
 
@@ -534,169 +563,71 @@ If we take a closer look selected cantons we see that the most recent
 wave started a little earlier on some cantons, relative to Geneva.
 Notice that we also include the Vienna curve for reference.
 
+From the curves in figure \ref{fig:lagged series}, we that there are substantial lags between some series especially between Vienna and Switzerland in the last wave. This feature gives us hope that we can use other series for predicting the evolution of incidence in some specific cantons.
+
+
 \begin{figure}
  \centering
  \includegraphics[width=\linewidth]{lagged_series.png}
  % lagged_series.png: 2100x1500 px, 72dpi, 74.08x52.92 cm, bb=0 0 2100 1500
- \caption{Selected swiss cantons and Vienna.}
+ \caption{Selected Swiss cantons and Vienna.}
  \label{fig:lagged series}
 \end{figure}
 
 
     
-    Looking at the cross correlation plot for some pairs of cantons, we can
-see that the lag between them is not \(0\), which gives us hope that we
-can use other series for predictive purposes.
+    
+    
+    
+    It's even better to look at all pairwise cross-correlations (Figure \ref{fig:corr_matrix}).
 
+\begin{figure}
+ \centering
+ \includegraphics[width=\linewidth]{Cross-corr_matrix.png}
+ % Cross-corr_matrix.png: 1800x1800 px, 72dpi, 63.50x63.50 cm, bb=0 0 1800 1800
+ \caption{Correlation matrix between all cantons}
+ \label{fig:corr_matrix}
+\end{figure}
     
-    
-    It's even better to look at all pairwise cross-correlations.
+For each pair of Cantons there is also a lag which corresponds to their maximal correlation, which we can also represent in matrix form (Figure \ref{fig:lagmatrix}).
 
-    
-    
+\begin{figure}
+ \centering
+ \includegraphics[width=\linewidth]{canton_lag_matrix.png}
+ % canton_lag_matrix.png: 1800x1800 px, 72dpi, 63.50x63.50 cm, bb=0 0 1800 1800
+ \caption{Pairwise lag matrix for all swiss cantons}
+ \label{fig:lagmatrix}
+\end{figure}
+
     
     
     \hypertarget{clustering-the-series-based-on-correlation}{%
-\subsubsection{Clustering the Series based on
-correlation}\label{clustering-the-series-based-on-correlation}}
+\subsubsection{Clustering the Series based on correlation}\label{clustering-the-series-based-on-correlation}}
 
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_64_0.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
-    \hypertarget{geo-visualization}{%
-\subsection{Geo visualization}\label{geo-visualization}}
+We can look at the cross-correlation as a measure of similarity between the time-series. Therefore we can use the correlation matrix, show in figure \ref{fig:corr_matrix}, as the basis of a hierarchical clustering algorithm.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=\linewidth]{dendro.png}
+ % dendro.png: 4500x3000 px, 300dpi, 38.10x25.40 cm, bb=0 0 1080 720
+ \caption{Dendrogram with the results of the hierarchical clustering of the series.}
+ \label{fig:dendro}
+\end{figure}
+
+\subsection{Geo visualization}\label{geo-visualization}
+
+It might be informative to represent the lags  on a map of Switzerland.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=\linewidth]{map_lags.png}
+ % map_lags.png: 1600x1000 px, 72dpi, 56.44x35.28 cm, bb=0 0 1600 1000
+ \caption{Map of Switzerland colored by the magnitude of the lags relative to canton Geneva. Lag scale is in days.}
+ \label{fig:maplags}
+\end{figure}
 
     
-    
-    
-    
-    
-    
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-   GID\_0       NAME\_0     GID\_1                  NAME\_1  \textbackslash{}
-0    CHE  Switzerland   CHE.1\_1                  Aargau
-1    CHE  Switzerland   CHE.2\_1  Appenzell Ausserrhoden
-2    CHE  Switzerland   CHE.3\_1   Appenzell Innerrhoden
-3    CHE  Switzerland   CHE.4\_1        Basel-Landschaft
-4    CHE  Switzerland   CHE.5\_1             Basel-Stadt
-5    CHE  Switzerland   CHE.6\_1                    Bern
-6    CHE  Switzerland   CHE.7\_1                Fribourg
-7    CHE  Switzerland   CHE.8\_1                  Genève
-8    CHE  Switzerland   CHE.9\_1                  Glarus
-9    CHE  Switzerland  CHE.10\_1              Graubünden
-10   CHE  Switzerland  CHE.11\_1                    Jura
-11   CHE  Switzerland  CHE.12\_1                 Lucerne
-12   CHE  Switzerland  CHE.13\_1               Neuchâtel
-13   CHE  Switzerland  CHE.14\_1               Nidwalden
-14   CHE  Switzerland  CHE.15\_1                Obwalden
-15   CHE  Switzerland  CHE.16\_1            Sankt Gallen
-16   CHE  Switzerland  CHE.17\_1            Schaffhausen
-17   CHE  Switzerland  CHE.18\_1                  Schwyz
-18   CHE  Switzerland  CHE.19\_1               Solothurn
-19   CHE  Switzerland  CHE.20\_1                 Thurgau
-20   CHE  Switzerland  CHE.21\_1                  Ticino
-21   CHE  Switzerland  CHE.22\_1                     Uri
-22   CHE  Switzerland  CHE.23\_1                  Valais
-23   CHE  Switzerland  CHE.24\_1                    Vaud
-24   CHE  Switzerland  CHE.25\_1                     Zug
-25   CHE  Switzerland  CHE.26\_1                  Zürich
 
-                                            VARNAME\_1 NL\_NAME\_1  \textbackslash{}
-0                             Argovia|Arg¢via|Argovie      None
-1   Appenzell Ausser-Rhoden|Appenzell Outer Rhodes{\ldots}      None
-2   Appenzell Inner-Rhoden|Appenzell Inner Rhodes|{\ldots}      None
-3   Bâle-Campagne|Basel-Country|Baselland|Basel-La{\ldots}      None
-4   Bâle-Ville|Basel-City|Basel-Town|Basilea-Citad{\ldots}      None
-5                                         Berna|Berne      None
-6                           Freiburg|Friburg|Friburgo      None
-7   Cenevre|Genebra|Geneve|Geneva|Genevra|Genf|Gin{\ldots}      None
-8                              Glaris|Glarona|Glaruna      None
-9                Graubünden|Grigioni|Grischun|Grisons      None
-10                                              Giura      None
-11                                     Lucerna|Luzern      None
-12                                          Neuenburg      None
-13       Nidvaldo|Nidwald|Unterwalden-le-Bas|Nidwaldo      None
-14  Obvaldo|Obwald|Unterwalden-le-Haut|Obwaldo|Sur{\ldots}      None
-15                      Saint-Gall|San Gallo|Son Gagl      None
-16                    Schaffhouse|Schaffusa|Sciaffusa      None
-17                                               None      None
-18                   Soletta|Soleure|Soleuro|Soloturn      None
-19                        Thurgovie|Turgovia|Turg¢via      None
-20                                      Tesino|Tessin      None
-21                                               None      None
-22                             Vallais|Vallese|Wallis      None
-23                                Vad|Waadt|Waadtland      None
-24                                          Zoug|Zugo      None
-25                        Turitg|Zurigo|Zürih|Zurique      None
-
-                   TYPE\_1 ENGTYPE\_1  CC\_1 HASC\_1  \textbackslash{}
-0   Canton|Kanton|Chantun    Canton  None  CH.AG
-1   Canton|Kanton|Chantun    Canton  None  CH.AR
-2   Canton|Kanton|Chantun    Canton  None  CH.AI
-3   Canton|Kanton|Chantun    Canton  None  CH.BL
-4   Canton|Kanton|Chantun    Canton  None  CH.BS
-5   Canton|Kanton|Chantun    Canton  None  CH.BE
-6   Canton|Kanton|Chantun    Canton  None  CH.FR
-7   Canton|Kanton|Chantun    Canton  None  CH.GE
-8   Canton|Kanton|Chantun    Canton  None  CH.GL
-9   Canton|Kanton|Chantun    Canton  None  CH.GR
-10  Canton|Kanton|Chantun    Canton  None  CH.JU
-11  Canton|Kanton|Chantun    Canton  None  CH.LU
-12  Canton|Kanton|Chantun    Canton  None  CH.NE
-13  Canton|Kanton|Chantun    Canton  None  CH.NW
-14  Canton|Kanton|Chantun    Canton  None  CH.OW
-15  Canton|Kanton|Chantun    Canton  None  CH.SG
-16  Canton|Kanton|Chantun    Canton  None  CH.SH
-17  Canton|Kanton|Chantun    Canton  None  CH.SZ
-18  Canton|Kanton|Chantun    Canton  None  CH.SO
-19  Canton|Kanton|Chantun    Canton  None  CH.TG
-20  Canton|Kanton|Chantun    Canton  None  CH.TI
-21  Canton|Kanton|Chantun    Canton  None  CH.UR
-22  Canton|Kanton|Chantun    Canton  None  CH.VS
-23  Canton|Kanton|Chantun    Canton  None  CH.VD
-24  Canton|Kanton|Chantun    Canton  None  CH.ZG
-25  Canton|Kanton|Chantun    Canton  None  CH.ZH
-
-                                             geometry geoRegion  lags
-0   MULTIPOLYGON (((7.94951 47.27751, 7.94897 47.2{\ldots}        AG   0.0
-1   MULTIPOLYGON (((9.20708 47.27694, 9.20828 47.2{\ldots}        AR   0.0
-2   MULTIPOLYGON (((9.51250 47.40100, 9.51430 47.4{\ldots}        AI   1.0
-3   MULTIPOLYGON (((7.36526 47.41939, 7.36377 47.4{\ldots}        BL   0.0
-4   MULTIPOLYGON (((7.55254 47.54676, 7.55290 47.5{\ldots}        BS   0.0
-5   MULTIPOLYGON (((7.09284 46.89419, 7.09202 46.8{\ldots}        BE   0.0
-6   MULTIPOLYGON (((6.78575 46.73603, 6.78559 46.7{\ldots}        FR   0.0
-7   MULTIPOLYGON (((6.23440 46.33147, 6.23259 46.3{\ldots}        GE   0.0
-8   MULTIPOLYGON (((8.90771 46.80860, 8.90603 46.8{\ldots}        GL   0.0
-9   MULTIPOLYGON (((10.22766 46.61207, 10.22734 46{\ldots}        GR   0.0
-10  MULTIPOLYGON (((6.97645 47.36205, 6.93670 47.3{\ldots}        JU   1.0
-11  MULTIPOLYGON (((8.47390 47.12135, 8.47540 47.1{\ldots}        LU   0.0
-12  MULTIPOLYGON (((6.46132 46.86218, 6.46295 46.8{\ldots}        NE   0.0
-13  MULTIPOLYGON (((8.36748 46.78924, 8.36706 46.7{\ldots}        NW   0.0
-14  MULTIPOLYGON (((8.39523 46.77334, 8.39626 46.7{\ldots}        OW   0.0
-15  MULTIPOLYGON (((9.46901 46.90068, 9.46991 46.8{\ldots}        SG   0.0
-16  MULTIPOLYGON (((8.85313 47.65377, 8.85196 47.6{\ldots}        SH   0.0
-17  MULTIPOLYGON (((8.42042 47.06653, 8.41810 47.0{\ldots}        SZ   3.0
-18  MULTIPOLYGON (((7.69325 47.15567, 7.68713 47.1{\ldots}        SO   0.0
-19  MULTIPOLYGON (((9.18018 47.65754, 9.17886 47.6{\ldots}        TG   0.0
-20  MULTIPOLYGON (((8.69525 46.10061, 8.69349 46.1{\ldots}        TI  -2.0
-21  MULTIPOLYGON (((8.48248 46.52972, 8.48077 46.5{\ldots}        UR   0.0
-22  MULTIPOLYGON (((7.61459 45.97337, 7.61351 45.9{\ldots}        VS   2.0
-23  MULTIPOLYGON (((7.05791 46.86422, 7.05659 46.8{\ldots}        VD  -1.0
-24  MULTIPOLYGON (((8.66821 47.16368, 8.67379 47.1{\ldots}        ZG   0.0
-25  MULTIPOLYGON (((8.87364 47.24979, 8.86491 47.2{\ldots}        ZH   0.0
-\end{Verbatim}
-\end{tcolorbox}
-        
-    
-    
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-:Polygons   [Longitude,Latitude]   (NAME\_1,geoRegion,lags)
-\end{Verbatim}
-\end{tcolorbox}
         
     \hypertarget{network-analysis}{%
 \subsubsection{Network analysis}\label{network-analysis}}
@@ -704,281 +635,27 @@ correlation}\label{clustering-the-series-based-on-correlation}}
 We can take the correlation matrix and build a network to represent the
 association between the cantons. for this network we will filter only
 correlations greater than \(0.7\). We will use the correlation as the
-weight of each edge.
+weight of each edge in the network. These weights can be used 
 
     
     
+\begin{figure}
+ \centering
+ \includegraphics[width=\linewidth]{net_communities.png}
+ % net_communities.png: 1600x1000 px, 72dpi, 56.44x35.28 cm, bb=0 0 1600 1000
+ \caption{Communities detected on the network of cantons.}
+ \label{fig:network}
+\end{figure}
     
-    
-    
-    
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-AtlasView(\{0: \{'weight': 0.7813234254178534\}\})
-\end{Verbatim}
-\end{tcolorbox}
-        
-    \hypertarget{community-detection}{%
-\paragraph{Community detection}\label{community-detection}}
-
-The greedy moodularity algorithm detects two communities
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-frozenset(\{'GR', 'GL', 'NW', 'SO', 'SG', 'TG', 'AR', 'OW', 'AI', 'LU', 'ZG',
-'UR', 'SZ', 'SH', 'BL', 'BS'\})
-frozenset(\{'VD', 'ZH', 'BE', 'NE', 'VS', 'AG', 'JU', 'FR', 'GE', 'TI'\})
-    \end{Verbatim}
-
-    
-    
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-:Overlay
-   .Graph.I  :Graph   [start,end]
-   .Labels.I :Labels   [x,y]   (index)
-\end{Verbatim}
-\end{tcolorbox}
+ 
         
     \hypertarget{bayesian-inference}{%
 \subsection{Bayesian Inference}\label{bayesian-inference}}
 
-We would like to infer from the data some basic rates.
+If we think about Epidemic as stochastic processes, it may be worth to try to infer some basic rates of this process from the data.
 
-    We start by restricting our observations to 2021. So for the case series
-we have:
+We start by restricting our observations to 2021, to avoid a potentially different dynamics in the beginning of the pandemic.  
 
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-           geoRegion       datum  entries  sumTotal  timeframe\_7d  \textbackslash{}
-date
-2021-01-01        GE  2021-01-01       64     44036         False
-2021-01-02        GE  2021-01-02      126     44162         False
-2021-01-03        GE  2021-01-03       72     44234         False
-2021-01-04        GE  2021-01-04      153     44387         False
-2021-01-05        GE  2021-01-05      163     44550         False
-{\ldots}              {\ldots}         {\ldots}      {\ldots}       {\ldots}           {\ldots}
-2021-11-27        GE  2021-11-27      330     80239          True
-2021-11-28        GE  2021-11-28      227     80466          True
-2021-11-29        GE  2021-11-29      742     81208          True
-2021-11-30        GE  2021-11-30      442     81650          True
-2021-12-01        GE  2021-12-01        0     81650         False
-
-            offset\_last7d  sumTotal\_last7d  timeframe\_14d  offset\_last14d  \textbackslash{}
-date
-2021-01-01          78600                0          False           76706
-2021-01-02          78600                0          False           76706
-2021-01-03          78600                0          False           76706
-2021-01-04          78600                0          False           76706
-2021-01-05          78600                0          False           76706
-{\ldots}                   {\ldots}              {\ldots}            {\ldots}             {\ldots}
-2021-11-27          78600             1639           True           76706
-2021-11-28          78600             1866           True           76706
-2021-11-29          78600             2608           True           76706
-2021-11-30          78600             3050           True           76706
-2021-12-01          78600                0          False           76706
-
-            sumTotal\_last14d  {\ldots}  inzsum14d  sumdelta7d  inzdelta7d  \textbackslash{}
-date                          {\ldots}
-2021-01-01                 0  {\ldots}     365.36        15.0        2.97
-2021-01-02                 0  {\ldots}     367.54        28.0        5.52
-2021-01-03                 0  {\ldots}     364.58        -8.0       -1.58
-2021-01-04                 0  {\ldots}     354.11       -44.0       -8.68
-2021-01-05                 0  {\ldots}     351.74       -21.0       -4.15
-{\ldots}                      {\ldots}  {\ldots}        {\ldots}         {\ldots}         {\ldots}
-2021-11-27              3533  {\ldots}     791.76       105.0       20.73
-2021-11-28              3760  {\ldots}     824.14        93.0       18.37
-2021-11-29              4502  {\ldots}     929.61       248.0       48.98
-2021-11-30              4944  {\ldots}     976.41        60.0       11.85
-2021-12-01                 0  {\ldots}     933.36      -423.0      -83.54
-
-                    type  type\_variant              version  datum\_unit  \textbackslash{}
-date
-2021-01-01  COVID19Cases           NaN  2021-12-01\_07-53-57         day
-2021-01-02  COVID19Cases           NaN  2021-12-01\_07-53-57         day
-2021-01-03  COVID19Cases           NaN  2021-12-01\_07-53-57         day
-2021-01-04  COVID19Cases           NaN  2021-12-01\_07-53-57         day
-2021-01-05  COVID19Cases           NaN  2021-12-01\_07-53-57         day
-{\ldots}                  {\ldots}           {\ldots}                  {\ldots}         {\ldots}
-2021-11-27  COVID19Cases           NaN  2021-12-01\_07-53-57         day
-2021-11-28  COVID19Cases           NaN  2021-12-01\_07-53-57         day
-2021-11-29  COVID19Cases           NaN  2021-12-01\_07-53-57         day
-2021-11-30  COVID19Cases           NaN  2021-12-01\_07-53-57         day
-2021-12-01  COVID19Cases           NaN  2021-12-01\_07-53-57         day
-
-            entries\_letzter\_stand  entries\_neu\_gemeldet  entries\_diff\_last
-date
-2021-01-01                     64                     0                818
-2021-01-02                    126                     0                818
-2021-01-03                     72                     0                818
-2021-01-04                    153                     0                818
-2021-01-05                    163                     0                818
-{\ldots}                           {\ldots}                   {\ldots}                {\ldots}
-2021-11-27                    328                     2                818
-2021-11-28                    215                    12                818
-2021-11-29                    364                   378                818
-2021-11-30                      2                   440                818
-2021-12-01                      0                     0                818
-
-[335 rows x 57 columns]
-\end{Verbatim}
-\end{tcolorbox}
-        
-    For the Test series we have:
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-                 datum  entries  entries\_pos  entries\_neg  sumTotal  \textbackslash{}
-date
-2021-01-01  2021-01-01      581           66          515    291842
-2021-01-02  2021-01-02     1178          125         1053    293020
-2021-01-03  2021-01-03      663           75          588    293683
-2021-01-04  2021-01-04     1961          157         1804    295644
-2021-01-05  2021-01-05     2155          177         1978    297799
-{\ldots}                {\ldots}      {\ldots}          {\ldots}          {\ldots}       {\ldots}
-2021-11-26  2021-11-26     4672          551         4121   1025495
-2021-11-27  2021-11-27     3092          459         2633   1028587
-2021-11-28  2021-11-28     1392          264         1128   1029979
-2021-11-29  2021-11-29     4342          664         3678   1034321
-2021-11-30  2021-11-30     4355          689         3666   1038676
-
-            timeframe\_7d  sumTotal\_last7d  timeframe\_14d  sumTotal\_last14d  \textbackslash{}
-date
-2021-01-01         False                0          False                 0
-2021-01-02         False                0          False                 0
-2021-01-03         False                0          False                 0
-2021-01-04         False                0          False                 0
-2021-01-05         False                0          False                 0
-{\ldots}                  {\ldots}              {\ldots}            {\ldots}               {\ldots}
-2021-11-26          True            12445           True             32565
-2021-11-27          True            15537           True             35657
-2021-11-28          True            16929           True             37049
-2021-11-29          True            21271           True             41391
-2021-11-30          True            25626           True             45746
-
-            timeframe\_28d  {\ldots}  inzsumTotal\_Phase4  inzsum7d  inzsum14d  \textbackslash{}
-date                       {\ldots}
-2021-01-01          False  {\ldots}                <NA>   2094.63    5599.17
-2021-01-02          False  {\ldots}                <NA>   2046.44    5485.02
-2021-01-03          False  {\ldots}                <NA>   1998.84    5380.74
-2021-01-04          False  {\ldots}                <NA>   1971.19    5103.26
-2021-01-05          False  {\ldots}                <NA>   1992.13    4783.12
-{\ldots}                   {\ldots}  {\ldots}                 {\ldots}       {\ldots}        {\ldots}
-2021-11-26           True  {\ldots}            72227.72   4573.38    7990.83
-2021-11-27           True  {\ldots}            72838.37   4714.59    8252.31
-2021-11-28           True  {\ldots}            73113.28   4794.97    8357.77
-2021-11-29           True  {\ldots}            73970.81   4973.11    8705.17
-2021-11-30           True  {\ldots}             74830.9    5061.0    9034.59
-
-                    type              version  datum\_unit  nachweismethode  \textbackslash{}
-date
-2021-01-01  COVID19Tests  2021-12-01\_07-53-57         day              all
-2021-01-02  COVID19Tests  2021-12-01\_07-53-57         day              all
-2021-01-03  COVID19Tests  2021-12-01\_07-53-57         day              all
-2021-01-04  COVID19Tests  2021-12-01\_07-53-57         day              all
-2021-01-05  COVID19Tests  2021-12-01\_07-53-57         day              all
-{\ldots}                  {\ldots}                  {\ldots}         {\ldots}              {\ldots}
-2021-11-26  COVID19Tests  2021-12-01\_07-53-57         day              all
-2021-11-27  COVID19Tests  2021-12-01\_07-53-57         day              all
-2021-11-28  COVID19Tests  2021-12-01\_07-53-57         day              all
-2021-11-29  COVID19Tests  2021-12-01\_07-53-57         day              all
-2021-11-30  COVID19Tests  2021-12-01\_07-53-57         day              all
-
-            geoRegion  entries\_diff\_last\_age  entries\_diff\_last
-date
-2021-01-01         GE                      1               5660
-2021-01-02         GE                      1               5660
-2021-01-03         GE                      1               5660
-2021-01-04         GE                      1               5660
-2021-01-05         GE                      1               5660
-{\ldots}               {\ldots}                    {\ldots}                {\ldots}
-2021-11-26         GE                      1               5660
-2021-11-27         GE                      1               5660
-2021-11-28         GE                      1               5660
-2021-11-29         GE                      1               5660
-2021-11-30         GE                      1               5660
-
-[334 rows x 54 columns]
-\end{Verbatim}
-\end{tcolorbox}
-        
-    And finally, the hospitalization series become:
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-           geoRegion       datum  entries  sumTotal  timeframe\_7d  \textbackslash{}
-date
-2021-01-01        GE  2021-01-01        6      1022         False
-2021-01-02        GE  2021-01-02        4      1026         False
-2021-01-03        GE  2021-01-03        5      1031         False
-2021-01-04        GE  2021-01-04        5      1036         False
-2021-01-05        GE  2021-01-05        2      1038         False
-{\ldots}              {\ldots}         {\ldots}      {\ldots}       {\ldots}           {\ldots}
-2021-11-27        GE  2021-11-27        0      2021          True
-2021-11-28        GE  2021-11-28        0      2021          True
-2021-11-29        GE  2021-11-29        0      2021          True
-2021-11-30        GE  2021-11-30        0      2021          True
-2021-12-01        GE  2021-12-01        0      2021         False
-
-            offset\_last7d  sumTotal\_last7d  timeframe\_14d  offset\_last14d  \textbackslash{}
-date
-2021-01-01           2021                0          False            2019
-2021-01-02           2021                0          False            2019
-2021-01-03           2021                0          False            2019
-2021-01-04           2021                0          False            2019
-2021-01-05           2021                0          False            2019
-{\ldots}                   {\ldots}              {\ldots}            {\ldots}             {\ldots}
-2021-11-27           2021                0           True            2019
-2021-11-28           2021                0           True            2019
-2021-11-29           2021                0           True            2019
-2021-11-30           2021                0           True            2019
-2021-12-01           2021                0          False            2019
-
-            sumTotal\_last14d  {\ldots}  inzsum14d  sumdelta7d  inzdelta7d  \textbackslash{}
-date                          {\ldots}
-2021-01-01                 0  {\ldots}      10.66         1.0        0.20
-2021-01-02                 0  {\ldots}      11.06         3.0        0.59
-2021-01-03                 0  {\ldots}      11.45         1.0        0.20
-2021-01-04                 0  {\ldots}      11.85        -1.0       -0.20
-2021-01-05                 0  {\ldots}      11.85        -2.0       -0.40
-{\ldots}                      {\ldots}  {\ldots}        {\ldots}         {\ldots}         {\ldots}
-2021-11-27                 2  {\ldots}       0.39         0.0        0.00
-2021-11-28                 2  {\ldots}       0.39        -1.0       -0.20
-2021-11-29                 2  {\ldots}       0.39         0.0        0.00
-2021-11-30                 2  {\ldots}       0.39         0.0        0.00
-2021-12-01                 0  {\ldots}       0.39         0.0        0.00
-
-                   type  type\_variant              version  datum\_unit  \textbackslash{}
-date
-2021-01-01  COVID19Hosp           NaN  2021-12-01\_07-53-57         day
-2021-01-02  COVID19Hosp           NaN  2021-12-01\_07-53-57         day
-2021-01-03  COVID19Hosp           NaN  2021-12-01\_07-53-57         day
-2021-01-04  COVID19Hosp           NaN  2021-12-01\_07-53-57         day
-2021-01-05  COVID19Hosp           NaN  2021-12-01\_07-53-57         day
-{\ldots}                 {\ldots}           {\ldots}                  {\ldots}         {\ldots}
-2021-11-27  COVID19Hosp           NaN  2021-12-01\_07-53-57         day
-2021-11-28  COVID19Hosp           NaN  2021-12-01\_07-53-57         day
-2021-11-29  COVID19Hosp           NaN  2021-12-01\_07-53-57         day
-2021-11-30  COVID19Hosp           NaN  2021-12-01\_07-53-57         day
-2021-12-01  COVID19Hosp           NaN  2021-12-01\_07-53-57         day
-
-            entries\_letzter\_stand  entries\_neu\_gemeldet  entries\_diff\_last
-date
-2021-01-01                      6                     0                  0
-2021-01-02                      4                     0                  0
-2021-01-03                      5                     0                  0
-2021-01-04                      5                     0                  0
-2021-01-05                      2                     0                  0
-{\ldots}                           {\ldots}                   {\ldots}                {\ldots}
-2021-11-27                      0                     0                  0
-2021-11-28                      0                     0                  0
-2021-11-29                      0                     0                  0
-2021-11-30                      0                     0                  0
-2021-12-01                      0                     0                  0
-
-[335 rows x 57 columns]
-\end{Verbatim}
-\end{tcolorbox}
-        
     \hypertarget{cases-and-hospitalizations-as-binomial-processes-with-variable-rates}{%
 \subsubsection{Cases and Hospitalizations as Binomial processes with
 variable
@@ -996,25 +673,9 @@ In a similar fashion, we can model the probability of Hospitalization,
 
 \[Hospitalizations_t \sim Bin(n=Cases_t, p=Ph_t).\]
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-Auto-assigning NUTS sampler{\ldots}
-Initializing NUTS using jitter+adapt\_diag{\ldots}
-Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [Phosp, Prevalence]
-    \end{Verbatim}
 
-    
-    \begin{Verbatim}[commandchars=\\\{\}]
-<IPython.core.display.HTML object>
-    \end{Verbatim}
 
-    
-    \begin{Verbatim}[commandchars=\\\{\}]
-Sampling 4 chains for 1\_000 tune and 1\_000 draw iterations (4\_000 + 4\_000 draws
-total) took 26 seconds.
-    \end{Verbatim}
-
-    The diagram of our inference becomes:
+The diagram of our inference looks like the figure below:
  
             
     
@@ -1024,22 +685,38 @@ total) took 26 seconds.
     { \hspace*{\fill} \\}
     
 
-    Which after our estimation yields the following probability distribution
-over time for the prevalence. Notice that it matches quite well the test
+    Which after our estimation yields the following posterior probability distribution
+ for the prevalence over time (Figure \ref{fig:prev}). Notice that it matches quite well the test
 positivity data (purple dots).
 
+The posterior distribution of the probability of Hospitalization for positive cases is shown in figure \ref{fig:phosp}
+
     
-    
-    
+\begin{figure}
+ \centering
+ \includegraphics[width=\linewidth]{prevalence_est.png}
+ % prevalence_est.png: 2100x1500 px, 72dpi, 74.08x52.92 cm, bb=0 0 2100 1500
+ \caption{Estimated prevalence of covid cases as a fraction of the exposed population. Estimated median and 95\% credible bounds are shown as a 7-day moving average.}
+ \label{fig:prev}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=\linewidth]{phosp.png}
+ % phosp.png: 2100x1500 px, 72dpi, 74.08x52.92 cm, bb=0 0 2100 1500
+ \caption{Posterior probability distribution for the probability of Hospitalization.}
+ \label{fig:phosp}
+\end{figure}
+
     
     \hypertarget{sir-based-forecasting}{%
 \subsubsection{SIR-based Forecasting}\label{sir-based-forecasting}}
 
 The FOPH makes available the daily estimates of the effective
-reproductive number, \(R_t\). With a goo estimate of R\_t it is possible
+reproductive number, $R_t$. With a good estimate of $R_t$ it is possible
 to simulate growth based on transmission models. Since for the SIR
 model, \[R_t = R_0 S(t)= \frac{\beta}{\gamma}S(t),\] we can use it to
-parameterize a simple transmission model with which to forcast cases and
+parameterize a simple transmission model with which to forecast cases and
 thus hospitalizations. We would normally write the SIR model as:
 
 \begin{align}
@@ -1047,7 +724,7 @@ thus hospitalizations. We would normally write the SIR model as:
 \frac{dI}{dt} &= \beta S(t)I(t) -\gamma I(t)
 \end{align}
 
-From the \(R_t\) time series, we can derive a time-dependent
+From the $R_t$ time series, we can derive a time-dependent
 transmission parameter, \[\beta(t)=\frac{R_t \gamma}{S(t)}.\]
 
 Then we can re-write the SIR model as
@@ -1074,62 +751,7 @@ average of it.
 
     
     
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-date
-2021-10-14    1.12
-2021-10-15    1.10
-2021-10-16    1.07
-2021-10-17    1.05
-2021-10-18    1.04
-2021-10-19    1.03
-2021-10-20    1.03
-2021-10-21    1.04
-2021-10-22    1.06
-2021-10-23    1.07
-2021-10-24    1.09
-2021-10-25    1.09
-2021-10-26    1.10
-2021-10-27    1.10
-2021-10-28    1.10
-2021-10-29    1.11
-2021-10-30    1.12
-2021-10-31    1.13
-2021-11-01    1.13
-2021-11-02    1.13
-2021-11-03    1.14
-2021-11-04    1.17
-2021-11-05    1.22
-2021-11-06    1.27
-2021-11-07    1.33
-2021-11-08    1.39
-2021-11-09    1.45
-2021-11-10    1.51
-2021-11-11    1.57
-2021-11-12    1.61
-2021-11-13    1.63
-2021-11-14    1.62
-2021-11-15    1.59
-2021-11-16     NaN
-2021-11-17     NaN
-2021-11-18     NaN
-2021-11-19     NaN
-2021-11-20     NaN
-2021-11-21     NaN
-2021-11-22     NaN
-2021-11-23     NaN
-2021-11-24     NaN
-2021-11-25     NaN
-2021-11-26     NaN
-2021-11-27     NaN
-2021-11-28     NaN
-2021-11-29     NaN
-2021-11-30     NaN
-2021-12-01     NaN
-Name: median\_R\_mean, dtype: float64
-\end{Verbatim}
-\end{tcolorbox}
-        
+
     The structure of the probabilistic model is depicted below.
  
             
@@ -1140,49 +762,38 @@ Name: median\_R\_mean, dtype: float64
     { \hspace*{\fill} \\}
     
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-Auto-assigning NUTS sampler{\ldots}
-Initializing NUTS using jitter+adapt\_diag{\ldots}
-Multiprocess sampling (4 chains in 4 jobs)
-NUTS: [I0, gamma, sigma]
-    \end{Verbatim}
-
-    
-    \begin{Verbatim}[commandchars=\\\{\}]
-<IPython.core.display.HTML object>
-    \end{Verbatim}
-
-    
-    \begin{Verbatim}[commandchars=\\\{\}]
-Sampling 4 chains for 1\_900 tune and 2\_000 draw iterations (7\_600 + 8\_000 draws
-total) took 8 seconds.
-There was 1 divergence after tuning. Increase `target\_accept` or reparameterize.
-The acceptance probability does not match the target. It is 0.884699057698102,
-but should be close to 0.8. Try to increase the number of tuning steps.
-    \end{Verbatim}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-Inference data with groups:
-        > posterior
-        > log\_likelihood
-        > sample\_stats
-        > observed\_data
-\end{Verbatim}
-\end{tcolorbox}
+After we run the inference, we obtain posterior distributions for all parameter in the diagram above which are shown below.
         
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Bayesian Hosp. rate_files/Bayesian Hosp. rate_109_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
-    
+I call attention to the the \textit{gamma} parameter, which is the recovery rate of infected individuals, corresponding to a recovery period of approximately 5 days ($1/\gamma)$.
+
+We also get a posterior distribution for the prevalence curve ($I(t)$)
+
+\begin{figure}
+ \centering
+ \includegraphics[width=\linewidth]{SIR_bayes.png}
+ % SIR_bayes.png: 2100x1500 px, 72dpi, 74.08x52.92 cm, bb=0 0 2100 1500
+ \caption{Posterior distribution for the model-based prevalence curve. Observed prevalence is represented as orange dots.}
+ \label{fig:sir}
+\end{figure}
+
     
     \hypertarget{forecasting}{%
 \subsection{Forecasting}\label{forecasting}}
 
-We applied Machine-learning approaches to Forecasting, namely KNN and
-LightGBM.
+Statistical forecasting models can also be quite useful to forecast trend in time-series. In the particular case of our dataset, since we want to make full use of all available data, including the series of cases and hospitalizations from other cantons beloging to the same canton we are interested in forecasting, we end up with a pretty large matrix of predictor that need to be properly weighted to achieve optimal results.
+
+For this purpose evaluated two Machine-learning models to Forecasting, namely K-nearest-neighbor regression (KNN) and Gradient Boosting Machine (LightGBM). The latter is in itself an ensemble of piecewise regressions which are fitted to the subsets of the data, minimizing a Mean-squared loss function. Both models are non-parametric and quite robust with respect to non-gaussian data. The LightGBM, model also includes automatically variable selection.
+
+For both models the regression is defined as 
+
+    $$H_{k,t} \sim C_{k,t-\tau_i} + H_{k,t-\tau_i} +V_{k,t-\tau_i},$$
+    
+Where $\tau$ takes values from the sequence $[1,2,\ldots 14]$, and k takes values from the set of cantons from the same cluster of the Canton we are forecasting for.
 
 \begin{figure}
 \centering
@@ -1190,45 +801,11 @@ LightGBM.
 \caption{forecasts}
 \end{figure}
 
-    \hypertarget{lightgbm-model}{%
-\subsubsection{Lightgbm model}\label{lightgbm-model}}
+%     \hypertarget{lightgbm-model}{%
+% \subsubsection{Lightgbm model}\label{lightgbm-model}}
 
     
-    \begin{Verbatim}[commandchars=\\\{\}]
-<IPython.core.display.HTML object>
-    \end{Verbatim}
 
-    
-    \begin{Verbatim}[commandchars=\\\{\}]
-The watermark extension is already loaded. To reload it, use:
-  \%reload\_ext watermark
-Last updated: Fri Nov 26 2021
-
-Python implementation: CPython
-Python version       : 3.9.7
-IPython version      : 7.28.0
-
-requests  : 2.25.1
-seaborn   : 0.11.2
-json      : 2.0.9
-numpy     : 1.20.3
-plotly    : 5.4.0
-matplotlib: 3.5.0
-lightgbm  : 3.3.1
-pandas    : 1.3.4
-
-Watermark: 2.2.0
-
-    \end{Verbatim}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-(642, 27)
-\end{Verbatim}
-\end{tcolorbox}
-        
-
-    % Add a bibliography block to the postdoc
     
     
     
