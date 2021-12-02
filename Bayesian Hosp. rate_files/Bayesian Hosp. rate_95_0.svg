@@ -10,53 +10,53 @@
 <title>%3</title>
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-244.91 354,-244.91 354,4 -4,4"/>
 <g id="clust1" class="cluster">
-<title>cluster334</title>
+<title>cluster335</title>
 <path fill="none" stroke="black" d="M20,-8C20,-8 330,-8 330,-8 336,-8 342,-14 342,-20 342,-20 342,-220.91 342,-220.91 342,-226.91 336,-232.91 330,-232.91 330,-232.91 20,-232.91 20,-232.91 14,-232.91 8,-226.91 8,-220.91 8,-220.91 8,-20 8,-20 8,-14 14,-8 20,-8"/>
-<text text-anchor="middle" x="320" y="-15.8" font-family="Times,serif" font-size="14.00">334</text>
+<text text-anchor="middle" x="320" y="-15.8" font-family="Times,serif" font-size="14.00">335</text>
 </g>
 <!-- Hospitalizations -->
 <g id="node1" class="node">
 <title>Hospitalizations</title>
-<ellipse fill="lightgrey" stroke="black" cx="109" cy="-76.48" rx="93.18" ry="37.45"/>
-<text text-anchor="middle" x="109" y="-87.78" font-family="Times,serif" font-size="14.00">Hospitalizations</text>
-<text text-anchor="middle" x="109" y="-72.78" font-family="Times,serif" font-size="14.00">~</text>
-<text text-anchor="middle" x="109" y="-57.78" font-family="Times,serif" font-size="14.00">Binomial</text>
-</g>
-<!-- Prevalence -->
-<g id="node2" class="node">
-<title>Prevalence</title>
-<ellipse fill="none" stroke="black" cx="267" cy="-187.43" rx="67.35" ry="37.45"/>
-<text text-anchor="middle" x="267" y="-198.73" font-family="Times,serif" font-size="14.00">Prevalence</text>
-<text text-anchor="middle" x="267" y="-183.73" font-family="Times,serif" font-size="14.00">~</text>
-<text text-anchor="middle" x="267" y="-168.73" font-family="Times,serif" font-size="14.00">Beta</text>
-</g>
-<!-- cases -->
-<g id="node4" class="node">
-<title>cases</title>
-<ellipse fill="lightgrey" stroke="black" cx="277" cy="-76.48" rx="56.64" ry="37.45"/>
-<text text-anchor="middle" x="277" y="-87.78" font-family="Times,serif" font-size="14.00">cases</text>
-<text text-anchor="middle" x="277" y="-72.78" font-family="Times,serif" font-size="14.00">~</text>
-<text text-anchor="middle" x="277" y="-57.78" font-family="Times,serif" font-size="14.00">Binomial</text>
-</g>
-<!-- Prevalence&#45;&gt;cases -->
-<g id="edge1" class="edge">
-<title>Prevalence&#45;&gt;cases</title>
-<path fill="none" stroke="black" d="M270.36,-149.85C271.11,-141.67 271.91,-132.89 272.7,-124.37"/>
-<polygon fill="black" stroke="black" points="276.21,-124.43 273.63,-114.15 269.23,-123.79 276.21,-124.43"/>
+<ellipse fill="lightgrey" stroke="black" cx="241" cy="-76.48" rx="93.18" ry="37.45"/>
+<text text-anchor="middle" x="241" y="-87.78" font-family="Times,serif" font-size="14.00">Hospitalizations</text>
+<text text-anchor="middle" x="241" y="-72.78" font-family="Times,serif" font-size="14.00">~</text>
+<text text-anchor="middle" x="241" y="-57.78" font-family="Times,serif" font-size="14.00">Binomial</text>
 </g>
 <!-- Phosp -->
-<g id="node3" class="node">
+<g id="node2" class="node">
 <title>Phosp</title>
-<ellipse fill="none" stroke="black" cx="109" cy="-187.43" rx="42.35" ry="37.45"/>
-<text text-anchor="middle" x="109" y="-198.73" font-family="Times,serif" font-size="14.00">Phosp</text>
-<text text-anchor="middle" x="109" y="-183.73" font-family="Times,serif" font-size="14.00">~</text>
-<text text-anchor="middle" x="109" y="-168.73" font-family="Times,serif" font-size="14.00">Beta</text>
+<ellipse fill="none" stroke="black" cx="241" cy="-187.43" rx="42.35" ry="37.45"/>
+<text text-anchor="middle" x="241" y="-198.73" font-family="Times,serif" font-size="14.00">Phosp</text>
+<text text-anchor="middle" x="241" y="-183.73" font-family="Times,serif" font-size="14.00">~</text>
+<text text-anchor="middle" x="241" y="-168.73" font-family="Times,serif" font-size="14.00">Beta</text>
 </g>
 <!-- Phosp&#45;&gt;Hospitalizations -->
 <g id="edge2" class="edge">
 <title>Phosp&#45;&gt;Hospitalizations</title>
-<path fill="none" stroke="black" d="M109,-149.85C109,-141.67 109,-132.89 109,-124.37"/>
-<polygon fill="black" stroke="black" points="112.5,-124.15 109,-114.15 105.5,-124.15 112.5,-124.15"/>
+<path fill="none" stroke="black" d="M241,-149.85C241,-141.67 241,-132.89 241,-124.37"/>
+<polygon fill="black" stroke="black" points="244.5,-124.15 241,-114.15 237.5,-124.15 244.5,-124.15"/>
+</g>
+<!-- Prevalence -->
+<g id="node3" class="node">
+<title>Prevalence</title>
+<ellipse fill="none" stroke="black" cx="83" cy="-187.43" rx="67.35" ry="37.45"/>
+<text text-anchor="middle" x="83" y="-198.73" font-family="Times,serif" font-size="14.00">Prevalence</text>
+<text text-anchor="middle" x="83" y="-183.73" font-family="Times,serif" font-size="14.00">~</text>
+<text text-anchor="middle" x="83" y="-168.73" font-family="Times,serif" font-size="14.00">Beta</text>
+</g>
+<!-- cases -->
+<g id="node4" class="node">
+<title>cases</title>
+<ellipse fill="lightgrey" stroke="black" cx="73" cy="-76.48" rx="56.64" ry="37.45"/>
+<text text-anchor="middle" x="73" y="-87.78" font-family="Times,serif" font-size="14.00">cases</text>
+<text text-anchor="middle" x="73" y="-72.78" font-family="Times,serif" font-size="14.00">~</text>
+<text text-anchor="middle" x="73" y="-57.78" font-family="Times,serif" font-size="14.00">Binomial</text>
+</g>
+<!-- Prevalence&#45;&gt;cases -->
+<g id="edge1" class="edge">
+<title>Prevalence&#45;&gt;cases</title>
+<path fill="none" stroke="black" d="M79.64,-149.85C78.89,-141.67 78.09,-132.89 77.3,-124.37"/>
+<polygon fill="black" stroke="black" points="80.77,-123.79 76.37,-114.15 73.79,-124.43 80.77,-123.79"/>
 </g>
 </g>
 </svg>
